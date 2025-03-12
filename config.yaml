@@ -1,0 +1,45 @@
+# # Copyright (c) Microsoft Corporation.
+# # Licensed under the MIT license.
+
+dpdk:
+    # removing -c 0xff
+    eal_init: ["-n", "4", "-a", "0000:41:00.0,txq_inline_mpw=256,txqs_min_inline=0","--proc-type=auto"]
+    pci_addr: "0000:41:00.0"
+    port: 0
+mlx5:
+    pci_addr: "0000:41:00.0"
+
+lwip:
+  known_hosts:
+    "0c:42:a1:dd:5f:88": 10.10.1.1
+    "0c:42:a1:dd:5b:dc": 10.10.1.2
+
+port: 54323 # for the server
+client_port: 12345
+
+host_types:
+  server: ["server"]
+  client: ["client1"]
+
+hosts:
+    server:
+        addr: 128.110.219.102
+        ip: 10.10.1.1
+        mac: "0c:42:a1:dd:5f:88"
+        tmp_folder: "/mnt/sdb/cornflakes_tmp"
+        cornflakes_dir: "/mnt/sdb/cornflakes"
+        config_file: "/mnt/sdb/cornflakes/config.yaml"
+
+    client1:
+        addr: 128.110.219.94
+        ip: 10.10.1.2
+        mac: "0c:42:a1:dd:5b:dc"
+        tmp_folder: "/mnt/sdb/cornflakes_tmp"
+        cornflakes_dir: "/mnt/sdb/cornflakes"
+        config_file: "/mnt/sdb/cornflakes/config.yaml"
+    
+cornflakes_dir: /mnt/sdb/cornflakes
+max_clients: 1
+key: /users/atope/.ssh/id_rsa
+user: atope 
+config_file: /mnt/sdb/cornflakes/config.yaml
