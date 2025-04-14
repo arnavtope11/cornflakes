@@ -6043,7 +6043,7 @@ where
         register_at_start: bool,
     ) -> Result<Vec<MempoolID>> {
         // use 2MB pages for data, 2MB pages for metadata (?)
-        //println!("In add memory pool: size {}, min_elts {}", size, min_elts);
+        println!("In add memory pool: size {}, min_elts {}", size, min_elts);
         let actual_size = cornflakes_libos::allocator::align_to_pow2(size);
         let mempool_params = sizes::MempoolAllocationParams::new(
             min_elts,

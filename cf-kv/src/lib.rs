@@ -484,8 +484,9 @@ where
     match datapath.allocate(pad_mempool_size(size))? {
         Some(buf) => Ok(buf),
         None => {
+            println!("In allocate_datapath_buffer: size {}, padded size {}", size, pad_mempool_size(size));
             mempool_ids.append(&mut datapath.add_memory_pool_with_size(
-                size,
+                pad_mempool_size(size),
                 unsafe { cornflakes_libos::datapath::NUM_PAGES },
                 unsafe { cornflakes_libos::datapath::REGISTER_AT_START },
             )?);

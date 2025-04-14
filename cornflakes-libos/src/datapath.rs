@@ -698,6 +698,7 @@ pub trait Datapath {
         register_at_start: bool,
     ) -> Result<Vec<MempoolID>> {
         let min_elts = num_pages * 2097152 / size;
+        println!("In add_memory_pool_with_size: size {}, min_elts {}, num_pages {}", size, min_elts, num_pages);
         color_eyre::eyre::ensure!(
             num_pages >= unsafe { ZCC_SEGMENT_SIZE_2MB_PAGES },
             format!(
