@@ -612,10 +612,10 @@ pub fn dump_measured_thread_stats(
 
     mega_info.dump();
 
-    tracing::warn!("About to print out the latency per second stats");
-    for stats in info.iter(){
-        stats.dump_latency_bucketed();
-    }
+    // tracing::warn!("About to print out the latency per second stats");
+    // for stats in info.iter(){
+    //     stats.dump_latency_bucketed();
+    // }
     
     Ok(())
 }
