@@ -1,0 +1,11 @@
+num_threads: 16
+num_clients: 1
+num_trials: 1
+key_size: 32
+max_num_lines: 1000000
+num_pages_per_mempool: 64
+rate_percentages: [0.50, 1.00] # Rate percentages for single configuration
+systems: ["vanilla_cornflakes", "cornflakes_copy", "zcc_cornflakes_mfu"]
+max_rates: 
+    "register_at_start = 1, pinning_limit = 1024, segment_size = 64, pinning_frequency = 1000": 6500
+    "register_at_start = 1, pinning_limit = 512, segment_size = 64, pinning_frequency = 1000": 6500
