@@ -585,16 +585,18 @@ class Experiment(metaclass=abc.ABCMeta):
             
             iteration_df = iteration.read_analysis_log(folder_path)
             df = pd.concat([df, iteration_df], ignore_index = True)
-            with open(str(latency_bucket), "r") as f:
-                bucketed_latency_dict_list.append(json.load(f))
-                f.close()
+            if (os.path.exists(latency_bucket)):
+                with open(str(latency_bucket), "r") as f:
+                    bucketed_latency_dict_list.append(json.load(f))
+                    f.close()
         # write to logfile
         df.to_csv(str(folder_path/logfile))
-        # write to bucketed latency file
-        bucketed_latency_file = f"{folder_path/logfile}_bucketed_latency.json"
-        with open(bucketed_latency_file, "w") as f:
-            json.dump(bucketed_latency_dict_list, f)
-            f.close()
+        if bucketed_latency_dict_list:
+            # write to bucketed latency file
+            bucketed_latency_file = f"{folder_path/logfile}_bucketed_latency.json"
+            with open(bucketed_latency_file, "w") as f:
+                json.dump(bucketed_latency_dict_list, f)
+                f.close()
 
     def run_iterations(self, total_args, iterations, print_stats=False):
         """
@@ -655,8 +657,8 @@ class Experiment(metaclass=abc.ABCMeta):
             if not status:
                 time.sleep(5)
                 for i in range(utils.NUM_RETRIES):
-                    utils.debug("Retrying iteration because it failed for the ",
-                                "{}th time.".format(i+1))
+                    utils.debug("Retrying iteration because it failed ",
+                                "{} time(s).".format(i+1))
                     status = iteration.run(folder_path,
                                    self.get_exp_config(),
                                    self.get_machine_config(),
@@ -821,6 +823,7 @@ class Iteration(metaclass=abc.ABCMeta):
         machine trait.
         Otherwise, writes csv into local_folder/analysis.log.
         """
+
         # TODO: iterate over all "client_type" hosts used by this
         # iteration
         # collect and sum histogram
@@ -831,6 +834,7 @@ class Iteration(metaclass=abc.ABCMeta):
         max_runtime = 0
         histogram = utils.Histogram({})
         for filename in client_file_list:
+            utils.debug("client_file_list filename: {}".format(filename))
             # format: json file with map 1: histogram
             # map 2: map from int -> {thread_stats}
             yaml_map = yaml.load(Path(filename).read_text(),
@@ -1253,7 +1257,7 @@ class Iteration(metaclass=abc.ABCMeta):
         if any_failed:
             self.delete_folder(local_results)
             return False
-        
+                
         program_version_info = {}
         for host in program_host_list:
             program_version_info[host] = self.get_program_version_info(
