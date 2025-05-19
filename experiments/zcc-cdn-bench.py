@@ -55,6 +55,7 @@ class ZccCdnIteration(runner.Iteration):
         return args
     def get_iteration_params(self):
         params = ["system", "max_num_lines", "trace_file",  "key_size", "num_threads", "num_clients", "offered_load_pps"]
+        params.extend(self.extra_zcc_params.get_iteration_params())
         return params
         
     def get_iteration_params_values(self):
@@ -72,6 +73,7 @@ class ZccCdnIteration(runner.Iteration):
                 "num_clients": self.get_num_clients(),
                 "system": self.system,
             }
+        ret.update(self.extra_zcc_params.get_iteration_params_values())
         return ret
     
     def get_num_clients(self):
@@ -319,7 +321,8 @@ class ZccCdnIteration(runner.Iteration):
     def get_csv_header(self):
         csv_order = self.get_iteration_params()
         csv_order.extend(["achieved_load_pps", "achieved_load_pps_sent",
-        "percent_achieved_rate", "avg", "median", "p99", "p999"])
+        "percent_achieved_rate", "avg", "median", "p75", "p80", "p85",
+        "p90", "p95", "p99", "p999"])
         csv_order.extend(self.get_bucket_list())
         return csv_order
 
