@@ -249,8 +249,13 @@ class ZccCdnIteration(runner.Iteration):
         iteration_params["percent_achieved_rate"] = percent_achieved
         iteration_params["avg"] = total_histogram.avg() / float(1000)
         iteration_params["median"] = total_histogram.value_at_quantile(0.50) / float(1000)
-        iteration_params["p99"] = total_histogram.value_at_quantile(0.99) / float(1000)
-        iteration_params["p999"] = total_histogram.value_at_quantile(0.999) / float(1000)
+        iteration_params["p75"] = histogram.value_at_quantile(0.75) / float(1000)
+        iteration_params["p80"] = histogram.value_at_quantile(0.80) / float(1000)
+        iteration_params["p85"] = histogram.value_at_quantile(0.85) / float(1000)
+        iteration_params["p90"] = histogram.value_at_quantile(0.90) / float(1000)
+        iteration_params["p95"] = histogram.value_at_quantile(0.95) / float(1000)
+        iteration_params["p99"] = histogram.value_at_quantile(0.99) / float(1000)
+        iteration_params["p999"] = histogram.value_at_quantile(0.999) / float(1000)
 
         format_string_params = ["{{{}}}".format(x) for x in
                 self.get_csv_header()]
