@@ -13,3 +13,6 @@ overflow-checks = false
 #incremental = false
 rpath = false
 
+[patch.crates-io]
+float_duration = { git = "https://github.com/tylerreisinger/rust-float-duration"}
+

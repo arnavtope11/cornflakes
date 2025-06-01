@@ -133,7 +133,7 @@ pub trait ServerSM {
                         _requests_processed,
                         _requests_processed as f64 / d.as_secs_f64()
                     );
-                    perftools::profiler::write(&mut std::io::stdout(), Some(PROFILER_DEPTH))
+                    perftools::profiler::write(&mut std::io::stdout())
                         .unwrap();
                     perftools::profiler::reset();
                     _requests_processed = 0;
@@ -214,7 +214,7 @@ pub trait ServerSM {
                         _requests_processed,
                         _requests_processed as f64 / d.as_secs_f64()
                     );
-                    perftools::profiler::write(&mut std::io::stdout(), Some(PROFILER_DEPTH))
+                    perftools::profiler::write(&mut std::io::stdout())
                         .unwrap();
                     perftools::profiler::reset();
                     _requests_processed = 0;

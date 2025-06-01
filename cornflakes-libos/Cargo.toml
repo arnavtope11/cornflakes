@@ -25,13 +25,13 @@ serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0.*"
 rand = "0.8.*"
 rand_distr = "0.4.1"
-demikernel = {git = "https://github.com/deeptir18/demikernel", branch = "perftools_public", version = "1", features = ["profiler"], optional = true}
+demikernel = {git = "https://github.com/microsoft/demikernel", branch = "dev", version = "1", features = ["profiler"], optional = true}
 itertools = "0.10.2"
 bitmaps = "3.2.0"
 bumpalo = { git = "https://github.com/deeptir18/bumpalo", features = ["collections"] }
 ahash = "0.7.6"
-zero_copy_cache = {git = "https://github.com/vishwanath1306/zero_copy_cache", rev = "fc63bf8002f746ff0eaf16f0bbecfcb552d1806b"}
-#zero_copy_cache = { path = "../../zero_copy_cache" }
+#zero_copy_cache = {git = "https://github.com/vishwanath1306/zero_copy_cache", rev = "fc63bf8002f746ff0eaf16f0bbecfcb552d1806b"}
+zero_copy_cache = { path = "../../zero_copy_cache" }
 
 [dev-dependencies]
 libc = "0.2.81"

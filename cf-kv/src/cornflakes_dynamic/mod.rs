@@ -148,13 +148,13 @@ where
     {
         let mut get_req = kv_serializer_hybrid::GetReq::new_in(arena);
         {
-            //#[cfg(feature = "profiler")]
-            //demikernel::timer!("Deserialize pkt");
+            #[cfg(feature = "profiler")]
+            demikernel::timer!("Deserialize pkt");
             get_req.deserialize(pkt, REQ_TYPE_SIZE, arena)?;
         }
         let value = {
-            //#[cfg(feature = "profiler")]
-            //demikernel::timer!("Get value from kv");
+            #[cfg(feature = "profiler")]
+            demikernel::timer!("Get value from kv");
             match self.use_linked_list() {
                 true => match linked_list_kv_server.get(get_req.get_key().to_str()?) {
                     Some(v) => v.as_ref().get_buffer(),
@@ -185,16 +185,16 @@ where
         );
         let mut get_resp = kv_serializer_hybrid::GetResp::new_in(arena);
         let mut copy_context = {
-            //#[cfg(feature = "profiler")]
-            //demikernel::timer!("Allocate cc");
+            #[cfg(feature = "profiler")]
+            demikernel::timer!("Allocate cc");
             CopyContext::new(arena, datapath)?
         };
 
         get_resp.set_id(get_req.get_id());
 
         {
-            //#[cfg(feature = "profiler")]
-            //demikernel::timer!("Set val inside cornflakes");
+            #[cfg(feature = "profiler")]
+            demikernel::timer!("Set val inside cornflakes");
             get_resp.set_val(dynamic_rcsga_hybrid_hdr::CFBytes::new(
                 value.as_ref(),
                 datapath,
