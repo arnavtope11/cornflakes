@@ -3,7 +3,7 @@ use cf_kv::{
     cdn::{CdnClient, CdnServerLoader},
     cornflakes_dynamic::{CornflakesClient, CornflakesKVServer},
     flatbuffers::{FlatbuffersClient, FlatbuffersKVServer},
-    init_zcc_logging,
+    init_zcc_logging, init_zcc_pin_and_unpin_thread,
     protobuf::{ProtobufClient, ProtobufKVServer},
     run_cdn::*,
     run_client_cdn, run_mlx5_cornflakes_with_zcc, run_server_cdn, set_zcc_and_mempool_parameters,

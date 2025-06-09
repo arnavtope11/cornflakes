@@ -30,6 +30,7 @@ macro_rules! run_server_cdn(
         if is_baseline {
             kv_server.run_state_machine_baseline(&mut connection)?;
         } else {
+            init_zcc_pin_and_unpin_thread!($opt, connection);
             kv_server.run_state_machine(&mut connection)?;
         }
     }
