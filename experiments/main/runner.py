@@ -1053,8 +1053,7 @@ class Iteration(metaclass=abc.ABCMeta):
                 program_args["folder"] = self.get_folder_name(host_tmp)
                 program_args["local_folder"] = local_results_path
                 program_args["host"] = host
-                if "time" not in program_args:
-                    program_args["time"] = exp_time
+                program_args["time"] = exp_time
                 program_args["random_seed"] = random_seed
                 program_args_map[(program_name, host)] = program_args
                 program_cmd = program["start"].format(**program_args)
@@ -1309,8 +1308,7 @@ class Iteration(metaclass=abc.ABCMeta):
                 program_args["folder"] = self.get_folder_name(host_tmp)
                 program_args["local_folder"] = local_results_path
                 program_args["host"] = host
-                if "time" not in program_args:
-                    program_args["time"] = exp_config["time"]
+                program_args["time"] = exp_config["time"]
                 program_args_map[(program_name, host)] = program_args
         return program_args_map
 

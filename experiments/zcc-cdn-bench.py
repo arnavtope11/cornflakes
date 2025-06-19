@@ -26,7 +26,6 @@ class ZccCdnIteration(runner.Iteration):
             log_keys = False,
             log_pinning_map = False,
             max_bucket = 16384,
-            exp_time = 10,
             trial = None):
         self.client_rates = client_rates
         self.key_size = key_size
@@ -38,7 +37,6 @@ class ZccCdnIteration(runner.Iteration):
         self.log_keys = log_keys
         self.log_pinning_map = log_pinning_map
         self.max_bucket = max_bucket
-        self.exp_time = exp_time
         self.trial = trial
     def __str__(self):
         return f"system: {self.system}, " \
@@ -127,9 +125,6 @@ class ZccCdnIteration(runner.Iteration):
 
     def get_num_threads_string(self):
         return "{}_threads".format(self.num_threads)
-    
-    def get_time_string(self):
-        return "time_{}".format(self.exp_time)
 
     def get_client_rate_string(self):
         # 2@300000,1@100000 implies 2 clients at 300000 pkts / sec and 1 at
@@ -149,7 +144,6 @@ class ZccCdnIteration(runner.Iteration):
                 self.extra_zcc_params.get_subfolder() /\
                 self.get_max_num_lines_string() /\
                 self.get_key_size_string() /\
-                self.get_time_string() /\
                 self.get_client_rate_string() /\
             self.get_num_threads_string()
 
@@ -164,7 +158,6 @@ class ZccCdnIteration(runner.Iteration):
         ret = {}
         ret["key_size"] = self.key_size
         ret["max_num_lines"] = self.max_num_lines
-        ret["time"] = self.exp_time
         ret["trace_file"] = self.trace_file
         ret["library"] = "cornflakes-dynamic"
         ret["client_library"] = "cornflakes-dynamic"
@@ -428,7 +421,6 @@ class ZccCdnBench(runner.Experiment):
             num_threads = utils.yaml_get(loop_yaml, "num_threads")
             num_clients = utils.yaml_get(loop_yaml, "num_clients")
             rate_percentages = utils.yaml_get(loop_yaml, "rate_percentages")
-            exp_times = utils.yaml_get(loop_yaml, "exp_times")
             key_size = utils.yaml_get(loop_yaml, "key_size")
             max_num_lines = utils.yaml_get(loop_yaml, "max_num_lines")
             systems = utils.yaml_get(loop_yaml, "systems")
@@ -436,30 +428,28 @@ class ZccCdnBench(runner.Experiment):
             max_rates_dict = self.parse_max_rates(utils.yaml_get(loop_yaml, "max_rates"))
             for trial in range(num_trials):
                 for system in systems:
-                    for exp_time in exp_times:
-                        for rate_percentage in rate_percentages:
-                            for zcckvexp in max_rates_dict:
-                                max_rate = max_rates_dict[zcckvexp]
-                                rate = int(float(max_rate) * rate_percentage)
-                                client_rates = [(rate, num_clients)]
-                                extra_zcc_params = runner.ExtraZccParameters(system,
-                                        zcc_pinning_limit=zcckvexp.pinning_limit,
-                                        zcc_segment_size=zcckvexp.segment_size,
-                                        register_at_start=zcckvexp.register_at_start,
-                                        zcc_pinning_frequency=zcckvexp.pinning_frequency,
-                                        num_pages_per_mempool=num_pages_per_mempool)
-                                it = ZccCdnIteration(
-                                        client_rates,
-                                        key_size,
-                                        total_args.trace_file,
-                                        max_num_lines,
-                                        num_threads,
-                                        extra_zcc_params,
-                                        total_args.log_keys,
-                                        total_args.log_pinning_map,
-                                        exp_time = exp_time,
-                                        trial = trial)
-                                ret.append(it)
+                    for rate_percentage in rate_percentages:
+                        for zcckvexp in max_rates_dict:
+                            max_rate = max_rates_dict[zcckvexp]
+                            rate = int(float(max_rate) * rate_percentage)
+                            client_rates = [(rate, num_clients)]
+                            extra_zcc_params = runner.ExtraZccParameters(system,
+                                    zcc_pinning_limit=zcckvexp.pinning_limit,
+                                    zcc_segment_size=zcckvexp.segment_size,
+                                    register_at_start=zcckvexp.register_at_start,
+                                    zcc_pinning_frequency=zcckvexp.pinning_frequency,
+                                    num_pages_per_mempool=num_pages_per_mempool)
+                            it = ZccCdnIteration(
+                                    client_rates,
+                                    key_size,
+                                    total_args.trace_file,
+                                    max_num_lines,
+                                    num_threads,
+                                    extra_zcc_params,
+                                    total_args.log_keys,
+                                    total_args.log_pinning_map,
+                                    trial = trial)
+                            ret.append(it)
             return ret
     
     def add_specific_args(self, parser, namespace):
