@@ -6002,12 +6002,12 @@ where
                     Some(mut m) => {
                         // m that is returned has lkey of 0, as allocator doesn't have up to date
                         // lkey information
-                        tracing::debug!("Zcc says addr {:?} is pinned", buf.as_ptr());
+                        tracing::info!("Zcc says addr {:?} is pinned", buf.as_ptr());
                         m.set_lkey(lkey as u32);
                         return Ok(Some(m));
                     }
                     None => {
-                        tracing::debug!(
+                        tracing::info!(
                             "Zero copy cache says addr {:?} is not pinned",
                             buf.as_ptr()
                         );
