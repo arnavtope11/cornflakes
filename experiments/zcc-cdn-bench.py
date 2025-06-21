@@ -213,15 +213,19 @@ class ZccCdnIteration(runner.Iteration):
         max_runtime = 0
         size_bucket_histogram = {}
         histogram = utils.Histogram({})
+        utils.debug("Iterating over client file list")
         for filename in client_file_list:
+            utils.debug("Current filename: {}", filename)
             # format:
             # map 1 = total histogram over all sizes
             # map 2 = per size histogram (summed over these threads)
             # map 3 = int -> thread stats
             yaml_map = yaml.load(Path(filename).read_text(), Loader =
                     yaml.FullLoader)
+            utils.debug("Finished loading yaml")
             total_histogram = utils.Histogram(yaml_map[0])
             histogram.combine(total_histogram)
+            utils.debug("Iterating per size histogram")
             for size_bucket_str in yaml_map[1]:
                 size_bucket = int(size_bucket_str)
                 hist = utils.Histogram(yaml_map[1][size_bucket_str])
@@ -231,12 +235,14 @@ class ZccCdnIteration(runner.Iteration):
                     size_bucket_histogram[size_bucket].combine(hist)
 
             threads_map = yaml_map[2]
+            utils.debug("Iterating threads map")
             for thread, thread_info in threads_map.items():
                 packets_sent += thread_info["num_sent"]
                 packets_received += thread_info["num_received"]
                 thread_runtime = thread_info["runtime"]
                 max_runtime = max(thread_runtime, max_runtime)
 
+        utils.debug("Finished iterating, calculate full statistics")
         # calculate full statistics
         achieved_load_pps = float(packets_received) / max_runtime
         achieved_load_pps_sent = float(packets_sent) / max_runtime

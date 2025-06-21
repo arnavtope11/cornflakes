@@ -16,6 +16,7 @@ ds-echo/c/echo-dynamic-sga-c
 mlx5-datapath-c/mlx5_datapath_cpp.h
 mlx5-datapath-c/mlx5_datapath.h
 tapir/tapir_serialized_cpp.h
+config.yaml
 
 experiments/main/__pycache__
 scatter-gather-bench/build/

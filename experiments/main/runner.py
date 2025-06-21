@@ -1280,8 +1280,10 @@ class Iteration(metaclass=abc.ABCMeta):
             client_file_list.append(programs["start_client"]["log"]["results"].format(**program_args_copy))
         # run analysis
         if not pprint:
+            utils.debug("Running analysis")
             self.calculate_iteration_stats(
                     local_results_path, client_file_list, print_stats)
+            utils.debug("Finished running analysis")
         return True
 
     def get_program_args_map(self, 
