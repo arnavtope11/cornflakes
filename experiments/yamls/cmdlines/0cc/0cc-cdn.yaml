@@ -1,6 +1,6 @@
 ### Experiment runner yaml for KV-server benchmark (cdn trace)
 
-time: 50
+time: 10
 programs:
     start_server:
         ready_file: { "{folder}/ready.log": "ready" }

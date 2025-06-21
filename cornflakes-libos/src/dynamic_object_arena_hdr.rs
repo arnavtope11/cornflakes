@@ -436,19 +436,13 @@ where
 
     pub fn new(ptr: &[u8], datapath: &mut D, arena: &'arena bumpalo::Bump) -> Result<Self> {
         if ptr.len() < datapath.get_copying_threshold() {
-            #[cfg(feature = "profiler")]
-            demikernel::timer!("Copy from slice");
             let mut arr = bumpalo::collections::Vec::with_capacity_zeroed_in(ptr.len(), arena);
             arr.copy_from_slice(ptr);
             return Ok(CFBytes::Copied(arr));
         } else {
-            #[cfg(feature = "profiler")]
-            demikernel::timer!("Recover metadata if pinned and insert into zero copy cache");
             match datapath.recover_metadata_if_pinned_and_insert_into_zero_copy_cache(ptr)? {
                 Some(m) => Ok(CFBytes::RefCounted(m)),
                 None => {
-                    #[cfg(feature = "profiler")]
-                    demikernel::timer!("Copy from slice");
                     let mut arr =
                         bumpalo::collections::Vec::with_capacity_zeroed_in(ptr.len(), arena);
                     arr.copy_from_slice(ptr);
