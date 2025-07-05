@@ -5987,6 +5987,8 @@ where
         &mut self,
         buf: &[u8],
     ) -> Result<Option<Self::DatapathMetadata>> {
+        #[cfg(feature = "profiler")]
+        demikernel::timer!("Zcc - record access and get io info if pinned");
         match self
             .zero_copy_cache
             .record_access_and_get_io_info_if_pinned(
@@ -5994,6 +5996,8 @@ where
                 self.thread_context.get_global_context_rc(),
             )? {
             Some((mempool_id, lkey)) => {
+                #[cfg(feature = "profiler")]
+                demikernel::timer!("Zcc matched - recover from mempool");
                 match self.allocator.recover_from_mempool(mempool_id, buf)? {
                     Some(mut m) => {
                         // m that is returned has lkey of 0, as allocator doesn't have up to date
