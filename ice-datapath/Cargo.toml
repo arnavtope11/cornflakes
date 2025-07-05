@@ -12,7 +12,7 @@ eui48 = "1.0.1"
 tracing-subscriber = "0.2.17"
 cornflakes-libos = { path = "../cornflakes-libos" }
 cornflakes-utils = { path = "../cornflakes-utils" }
-demikernel = {git = "https://github.com/microsoft/demikernel", branch = "dev", version = "1", features = ["profiler"], optional = true}
+demikernel = {git = "https://github.com/microsoft/demikernel", rev = "59a58d78bd46082529daea4e2b3013f60b5e5af2", version = "1", features = ["profiler"], optional = true}
 yaml-rust = "0.4.3"
 hashbrown = "0.11.*"
 bytes = "1.1.0"

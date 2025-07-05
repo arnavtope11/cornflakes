@@ -17,7 +17,7 @@ cornflakes-utils = { path = "../cornflakes-utils" }
 linux-datapath = { path = "../linux-datapath" }
 mlx5-datapath = { path = "../mlx5-datapath", optional = true }
 dpdk-datapath = { path = "../dpdk-datapath", optional = true }
-demikernel = {git = "https://github.com/microsoft/demikernel", branch = "dev", version = "1", features = ["profiler"], optional = true}
+demikernel = {git = "https://github.com/microsoft/demikernel", rev = "59a58d78bd46082529daea4e2b3013f60b5e5af2", version = "1", features = ["profiler"], optional = true}
 yaml-rust = "0.4.3"
 hashbrown = "0.11.*"
 bytes = "1.1.0"

@@ -16,7 +16,7 @@ structopt-derive="0.2.16"
 cornflakes-libos = { path = "../cornflakes-libos" }
 cornflakes-utils = { path = "../cornflakes-utils" }
 dpdk-datapath = { path = "../dpdk-datapath", optional = true }
-demikernel = {git = "https://github.com/microsoft/demikernel", version = "1", branch = "dev", features = ["profiler"], optional = true}
+demikernel = {git = "https://github.com/microsoft/demikernel", version = "1", rev = "59a58d78bd46082529daea4e2b3013f60b5e5af2", features = ["profiler"], optional = true}
 bytes = "1.0.1"
 rand = "0.7.3"
 rand_distr = "0.3.0"

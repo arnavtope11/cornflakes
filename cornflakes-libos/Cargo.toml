@@ -25,7 +25,7 @@ serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0.*"
 rand = "0.8.*"
 rand_distr = "0.4.1"
-demikernel = {git = "https://github.com/microsoft/demikernel", branch = "dev", version = "1", features = ["profiler"], optional = true}
+demikernel = {git = "https://github.com/microsoft/demikernel", rev = "59a58d78bd46082529daea4e2b3013f60b5e5af2", version = "1", features = ["profiler"], optional = true}
 itertools = "0.10.2"
 bitmaps = "3.2.0"
 bumpalo = { git = "https://github.com/deeptir18/bumpalo", features = ["collections"] }
